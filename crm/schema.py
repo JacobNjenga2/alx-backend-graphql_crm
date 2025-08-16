@@ -291,10 +291,22 @@ class CreateOrder(Mutation):
 
 # Query class
 class Query(ObjectType):
-    # Basic queries
-    all_customers = DjangoFilterConnectionField(CustomerType, filterset_class=CustomerFilter)
-    all_products = DjangoFilterConnectionField(ProductType, filterset_class=ProductFilter)
-    all_orders = DjangoFilterConnectionField(OrderType, filterset_class=OrderFilter)
+    # Basic queries with ordering support
+    all_customers = DjangoFilterConnectionField(
+        CustomerType, 
+        filterset_class=CustomerFilter,
+        order_by=graphene.List(graphene.String)
+    )
+    all_products = DjangoFilterConnectionField(
+        ProductType, 
+        filterset_class=ProductFilter,
+        order_by=graphene.List(graphene.String)
+    )
+    all_orders = DjangoFilterConnectionField(
+        OrderType, 
+        filterset_class=OrderFilter,
+        order_by=graphene.List(graphene.String)
+    )
     
     customer = relay.Node.Field(CustomerType)
     product = relay.Node.Field(ProductType)
